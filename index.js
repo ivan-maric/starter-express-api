@@ -3,6 +3,9 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const util = require('util'); //za fino formatiran ispis u log...
+const path = require('path');
+
+const assetsPath = path.join(__dirname, 'build');
 
 const { MongoClient, ServerApiVersion } = require('mongodb');
 
@@ -20,15 +23,12 @@ const app = express();
 const port = process.env.PORT || 8000;
 
 app.use(cors());
+app.use(express.static(assetsPath));
 
 // parse application/json, basically parse incoming Request Object as a JSON Object
 app.use(express.json());
 // parse incoming Request Object if object, with nested objects, or generally any type.
 app.use(express.urlencoded({ extended: true }));
-
-app.get('/', async (req, res) => {
-  res.send('hello world!');
-});
 
 app.get('/api/cities', async (req, res) => {
   try {
@@ -247,6 +247,22 @@ app.delete('/api/cities', async (req, res) => {
     console.log('finally');
     await client.close();
   }
+});
+
+app.get('*', (req, res, next) => {
+  const options = {
+    root: assetsPath,
+    headers: {
+      'x-timestamp': Date.now(),
+      'x-sent': true,
+    },
+  };
+
+  const fileName = 'index.html';
+  res.sendFile(fileName, options, err => {
+    if (err) next(err);
+    else console.log('Sent: ', fileName);
+  });
 });
 
 app.listen(port, () => {
