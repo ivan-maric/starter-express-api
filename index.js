@@ -30,7 +30,7 @@ app.get('/', async (req, res) => {
   res.send('hello world!');
 });
 
-app.get('/cities', async (req, res) => {
+app.get('/api/cities', async (req, res) => {
   try {
     await client.connect();
 
@@ -73,7 +73,7 @@ app.get('/cities', async (req, res) => {
   }
 });
 
-app.put('/cities', async (req, res) => {
+app.put('/api/cities', async (req, res) => {
   console.log({ body: req.body });
 
   try {
@@ -127,7 +127,7 @@ app.put('/cities', async (req, res) => {
   }
 });
 
-app.post('/cities', async (req, res) => {
+app.post('/api/cities', async (req, res) => {
   console.log({ body: req.body });
 
   try {
@@ -178,7 +178,7 @@ app.post('/cities', async (req, res) => {
   }
 });
 
-app.delete('/cities', async (req, res) => {
+app.delete('/api/cities', async (req, res) => {
   console.log({ body: req.body });
 
   //My proprietary command for drop DB.
