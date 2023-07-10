@@ -26,7 +26,7 @@ app.use(express.json());
 // parse incoming Request Object if object, with nested objects, or generally any type.
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/cities', async (req, res) => {
+app.get('/', async (req, res) => {
   res.send('hello world!');
 });
 
